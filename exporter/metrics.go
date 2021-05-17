@@ -18,7 +18,7 @@ func AddMetrics() map[string]*prometheus.Desc {
 	APIMetrics["Commits"] = prometheus.NewDesc(
 		prometheus.BuildFQName("gitlab", "repo", "commit_info"),
 		"Commit info",
-		[]string{"repo_name", "branch", "commit_hash", "author", "commit_message", "created_at"}, nil,
+		[]string{"repo_name", "branch", "commit_hash", "author", "created_at"}, nil,
 	)
 
 	APIMetrics["Releases"] = prometheus.NewDesc(
@@ -41,7 +41,7 @@ func (e *Exporter) processMetrics(data []*Datum, ch chan<- prometheus.Metric) er
 
 		for _, b := range x.Commits {
 			for _, c := range b.BranchCommits {
-				ch <- prometheus.MustNewConstMetric(e.APIMetrics["Commits"], prometheus.GaugeValue, 0.0, x.RepoName, b.Branch, c.ID, c.AuthorName, c.Message, c.CreatedAt.String())
+				ch <- prometheus.MustNewConstMetric(e.APIMetrics["Commits"], prometheus.GaugeValue, 0.0, x.RepoName, b.Branch, c.ID, c.AuthorName, c.CreatedAt.String())
 			}
 		}
 
