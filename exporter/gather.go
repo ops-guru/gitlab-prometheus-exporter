@@ -5,8 +5,6 @@ import (
 	goGitlab "github.com/xanzy/go-gitlab"
 )
 
-
-
 // XXX gatherData - Collects the data from the API and stores into struct
 func (e *Exporter) gatherData() ([]*Datum, error) {
 
@@ -14,7 +12,7 @@ func (e *Exporter) gatherData() ([]*Datum, error) {
 
 	// this needs to use something returned from getGroups
 	for _, repo := range e.Config.Repositories {
-		git, err := goGitlab.NewClient(e.Config.APIToken)
+		git, err := goGitlab.NewClient(e.Config.APIToken, goGitlab.WithBaseURL(e.Config.APIURL))
 		if err != nil {
 			log.Fatalf("Failed to create client: %v", err)
 		}
@@ -55,7 +53,7 @@ func getMergeRequests(repo string, client *goGitlab.Client) MergeRequests {
 			Page: 0,
 		},
 	}
-	for  {
+	for {
 		pageMRs, resp, err := client.MergeRequests.ListProjectMergeRequests(repo, opts)
 		if err != nil {
 			log.Errorf("Unable to obtain merge requests from API, Error: %s", err)
@@ -85,7 +83,7 @@ func getCommits(repo string, branch string, client *goGitlab.Client) Commits {
 			Page: 0,
 		},
 	}
-	for  {
+	for {
 		pageCs, resp, err := client.Commits.ListCommits(repo, opts)
 		if err != nil {
 			log.Errorf("Unable to obtain commits from API, Error: %s", err)

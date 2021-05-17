@@ -2,9 +2,10 @@ package config
 
 import (
 	"fmt"
-	goGitlab "github.com/xanzy/go-gitlab"
 	"io/ioutil"
 	"strings"
+
+	goGitlab "github.com/xanzy/go-gitlab"
 
 	log "github.com/sirupsen/logrus"
 
@@ -20,7 +21,7 @@ func GetEnv(key, fallback string) string {
 	return value
 }
 
-// Config struct holds all of the runtime confgiguration for the application
+// Config struct holds all of the runtime configuration for the application
 type Config struct {
 	APIURL        string
 	Repositories  []string
@@ -36,7 +37,7 @@ func Init() Config {
 
 	listenPort := GetEnv("LISTEN_PORT", "9171")
 	os.Setenv("LISTEN_PORT", listenPort)
-	url := os.Getenv("APIURL")
+	apiurl := os.Getenv("APIURL")
 	repos := os.Getenv("REPOS")
 	groups := os.Getenv("GROUPS")
 	users := os.Getenv("USERS")
@@ -66,9 +67,8 @@ func Init() Config {
 		}
 	}
 
-
 	appConfig := Config{
-		url,
+		apiurl,
 		reposList,
 		groupList,
 		users,
@@ -101,7 +101,7 @@ func getAuth(token string, tokenFile string) (string, error) {
 // that belong to a group
 func getReposByGroup(group string, token string) []string {
 	fmt.Println(token)
-	git, err := goGitlab.NewClient(token)
+	git, err := goGitlab.NewClient(token, goGitlab.WithBaseURL(apiurl))
 	if err != nil {
 		log.Fatalf("Failed to create client: %v", err)
 		return nil
