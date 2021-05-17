@@ -20,17 +20,18 @@ func (e *Exporter) gatherData() ([]*Datum, error) {
 		d := new(Datum)
 
 		d.RepoName = repo
-
+		log.Infof("API data started for repository: %s", repo)
 		d.Branches = getBranches(repo, git)
-
+		log.Infof("Branch gathered for repository: %s", repo)
 		d.Releases = getReleases(repo, git)
-
+		log.Infof("Releases gathered for repository: %s", repo)
 		d.MergeRequests = getMergeRequests(repo, git)
-
+		log.Infof("MergeRequests gathered for repository: %s", repo)
 		for _, b := range d.Branches {
 			c := new(CommitsPerBranch)
 			c.Branch = b.Name
 			c.BranchCommits = getCommits(repo, b.Name, git)
+			log.Infof("Branch gathered for repository: %s branch: %s ", repo, b.Name)
 			d.Commits = append(d.Commits, c)
 		}
 
@@ -107,7 +108,7 @@ type Releases []*goGitlab.Release
 
 func getReleases(repo string, client *goGitlab.Client) Releases {
 	var releases Releases
-	releases, _, err := client.Releases.ListReleases(repo, &goGitlab.ListReleasesOptions{PerPage: 1000})
+	releases, _, err := client.Releases.ListReleases(repo, &goGitlab.ListReleasesOptions{PerPage: 100})
 	if err != nil {
 		log.Errorf("Unable to obtain releases from API, Error: %s", err)
 	}
@@ -118,7 +119,7 @@ type Branches []*goGitlab.Branch
 
 func getBranches(repo string, client *goGitlab.Client) Branches {
 	var branches Branches
-	pageOpts := goGitlab.ListOptions{PerPage: 1000}
+	pageOpts := goGitlab.ListOptions{PerPage: 100}
 	branches, _, err := client.Branches.ListBranches(repo, &goGitlab.ListBranchesOptions{ListOptions: pageOpts})
 	if err != nil {
 		log.Errorf("Unable to obtain branches from API, Error: %s", err)
