@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  gitlab-exporter:
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    image: gitlab-exporter_gitlab-exporter:latest
+    environment:
+      # It can use both repositories and organization names separated by comma ", "
+      # eg:
+      # REPOS=RepoName1, RepoName2
+      # GROUPS= ORG1, ORG2
+      - GROUPS=aserdean1
+      - GITLAB_TOKEN=vi4j27pD9fZKCFJTN5Cn
+
+  prometheus:
+    image: docker.io/prom/prometheus:v2.22.2
+    ports:
+      - 9090:9090
+    links:
+      - gitlab-exporter
+    volumes:
+      - ./prometheus/config.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: docker.io/grafana/grafana:7.3.3
+    ports:
+      - 3000:3000
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: 'true'
+      GF_INSTALL_PLUGINS: grafana-polystat-panel,yesoreyeram-boomtable-panel
+    links:
+      - prometheus
+    volumes:
+      - ./grafana/datasources.yml:/etc/grafana/provisioning/datasources/default.yml
+
+networks:
+  default:
+    driver: bridge
