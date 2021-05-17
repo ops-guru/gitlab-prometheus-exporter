@@ -1,7 +1,7 @@
 package http
 
 import (
-	"github.com/aserdean/gitlab-exporter/exporter"
+	"exporter"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log"

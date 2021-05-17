@@ -1,7 +1,7 @@
 package exporter
 
 import (
-	"github.com/aserdean/gitlab-exporter/config"
+	"config"
 	"github.com/prometheus/client_golang/prometheus"
 	goGitlab "github.com/xanzy/go-gitlab"
 )
