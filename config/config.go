@@ -62,7 +62,7 @@ func Init() Config {
 		gs := strings.Split(groups, ", ")
 		for _, x := range gs {
 			groupList = append(reposList, x)
-			groupRepos := getReposByGroup(x, token)
+			groupRepos := getReposByGroup(x, token, apiurl)
 			reposList = append(reposList, groupRepos...)
 		}
 	}
@@ -99,7 +99,7 @@ func getAuth(token string, tokenFile string) (string, error) {
 
 // getReposByGroup returns a list of repositories
 // that belong to a group
-func getReposByGroup(group string, token string) []string {
+func getReposByGroup(group string, token string, apiurl string) []string {
 	fmt.Println(token)
 	git, err := goGitlab.NewClient(token, goGitlab.WithBaseURL(apiurl))
 	if err != nil {
