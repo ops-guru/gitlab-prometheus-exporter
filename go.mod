@@ -1,4 +1,4 @@
-module github.com/aserdean/gitlab-exporter
+module github.com/andreip-og/gitlab-exporter
 
 go 1.16
 
@@ -12,4 +12,4 @@ require (
 	github.com/xanzy/go-gitlab v0.49.0
 )
 
-replace github.com/aserdean/gitlab-exporter => ../gitlab-exporter
+replace github.com/andreip-og/gitlab-exporter => ../gitlab-exporter

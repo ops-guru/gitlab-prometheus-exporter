@@ -36,7 +36,7 @@ func Init() Config {
 
 	listenPort := GetEnv("LISTEN_PORT", "9171")
 	os.Setenv("LISTEN_PORT", listenPort)
-	url := "https://gitlab.com"
+	url := os.Getenv("APIURL")
 	repos := os.Getenv("REPOS")
 	groups := os.Getenv("GROUPS")
 	users := os.Getenv("USERS")

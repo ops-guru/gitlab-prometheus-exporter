@@ -2,10 +2,11 @@ package http
 
 import (
 	"exporter"
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log"
 	"net/http"
+
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 type Server struct {
@@ -36,5 +37,5 @@ func NewServer(exporter exporter.Exporter) *Server {
 }
 
 func (s *Server) Start() {
-	log.Fatal(http.ListenAndServe(":8080", s.Handler))
+	log.Fatal(http.ListenAndServe(":8081", s.Handler))
 }

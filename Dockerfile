@@ -2,8 +2,8 @@ FROM golang:1.16 as build
 
 ENV GO111MODULE=on
 
-COPY ./ /go/src/github.com/aserdean/gitlab-exporter/
-WORKDIR /go/src/github.com/aserdean/gitlab-exporter/
+COPY ./ /go/src/github.com/andreip-og/gitlab-exporter/
+WORKDIR /go/src/github.com/andreip-og/gitlab-exporter/
 
 RUN go mod download \
     && CGO_ENABLED=0 GOOS=linux go build -o /bin/main
@@ -16,5 +16,5 @@ RUN apk --no-cache add ca-certificates \
 ADD VERSION .
 USER exporter
 COPY --from=build /bin/main /bin/main
-ENV LISTEN_PORT=8080
+ENV LISTEN_PORT=8081
 ENTRYPOINT [ "/bin/main" ]

@@ -1,9 +1,9 @@
 package main
 
 import (
-	conf "github.com/aserdean/gitlab-exporter/config"
-	"github.com/aserdean/gitlab-exporter/exporter"
-	"github.com/aserdean/gitlab-exporter/http"
+	conf "github.com/andreip-og/gitlab-exporter/config"
+	"github.com/andreip-og/gitlab-exporter/exporter"
+	"github.com/andreip-og/gitlab-exporter/http"
 	"github.com/fatih/structs"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/sirupsen/logrus"

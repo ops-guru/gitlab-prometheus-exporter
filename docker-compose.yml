@@ -3,17 +3,17 @@ version: "3"
 services:
   gitlab-exporter:
     expose:
-      - 8080
+      - 8081
     ports:
-      - 8080:8080
+      - 8081:8081
     image: gitlab-exporter_gitlab-exporter:latest
     environment:
       # It can use both repositories and organization names separated by comma ", "
       # eg:
       # REPOS=RepoName1, RepoName2
       # GROUPS= ORG1, ORG2
-      - GROUPS=aserdean1
-      - GITLAB_TOKEN=vi4j27pD9fZKCFJTN5Cn
+      - GROUPS=andreip-og1
+      - GITLAB_TOKEN=
 
   prometheus:
     image: docker.io/prom/prometheus:v2.22.2
