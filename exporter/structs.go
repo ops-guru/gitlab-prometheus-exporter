@@ -1,7 +1,7 @@
 package exporter
 
 import (
-	"config"
+	"github.com/andreip-og/gitlab-exporter/config"
 	"github.com/prometheus/client_golang/prometheus"
 	goGitlab "github.com/xanzy/go-gitlab"
 )
@@ -20,14 +20,14 @@ type Data []Datum
 
 // Datum is used to store data from all the relevant endpoints in the API
 type Datum struct {
-	RepoName string
-	Branches []*goGitlab.Branch
+	RepoName      string
+	Branches      []*goGitlab.Branch
 	MergeRequests []*goGitlab.MergeRequest
-	Releases   []*goGitlab.Release
-	Commits []*CommitsPerBranch
+	Releases      []*goGitlab.Release
+	Commits       []*CommitsPerBranch
 }
 
 type CommitsPerBranch struct {
-	Branch string
+	Branch        string
 	BranchCommits []*goGitlab.Commit
 }

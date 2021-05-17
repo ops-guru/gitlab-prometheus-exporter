@@ -1,9 +1,10 @@
 package http
 
 import (
-	"exporter"
 	"log"
 	"net/http"
+
+	"github.com/andreip-og/gitlab-exporter/exporter"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
