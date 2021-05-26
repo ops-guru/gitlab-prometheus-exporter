@@ -39,10 +39,11 @@ func (e *Exporter) processMetrics(data []*Datum, ch chan<- prometheus.Metric) er
 			ch <- prometheus.MustNewConstMetric(e.APIMetrics["MergeRequestID"], prometheus.GaugeValue, float64(mr.ID), x.RepoName, mr.Author.Name, mr.Title, mr.MergeStatus)
 		}
 
-		for _, b := range x.Commits {
-			// for _, c := range b.BranchCommits {
-			// 	ch <- prometheus.MustNewConstMetric(e.APIMetrics["Commits"], prometheus.GaugeValue, 0.0, x.RepoName, b.Branch, c.ID, c.AuthorName, c.CreatedAt.String())
-			// }
+		//for _, b := range x.Commits {
+		// for _, c := range b.BranchCommits {
+		// 	ch <- prometheus.MustNewConstMetric(e.APIMetrics["Commits"], prometheus.GaugeValue, 0.0, x.RepoName, b.Branch, c.ID, c.AuthorName, c.CreatedAt.String())
+		// }
+		for _, c := range x.Commits {
 			ch <- prometheus.MustNewConstMetric(e.APIMetrics["Commits"], prometheus.GaugeValue, 0.0, x.RepoName, c.ID, c.AuthorName)
 
 		}

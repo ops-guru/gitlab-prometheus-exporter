@@ -27,13 +27,15 @@ func (e *Exporter) gatherData() ([]*Datum, error) {
 		log.Infof("Releases gathered for repository: %s", repo)
 		d.MergeRequests = getMergeRequests(repo, git)
 		log.Infof("MergeRequests gathered for repository: %s", repo)
-		for _, b := range d.Branches {
-			c := new(CommitsPerBranch)
-			c.Branch = b.Name
-			c.BranchCommits = getCommits(repo, b.Name, git)
-			log.Infof("Branch gathered for repository: %s branch: %s ", repo, b.Name)
-			d.Commits = append(d.Commits, c)
-		}
+		d.Commits = getCommits(repo, git)
+		log.Infof("Commits gathered for repository: %s", repo)
+		// for _, b := range d.Branches {
+		// 	c := new(CommitsPerBranch)
+		// 	c.Branch = b.Name
+		// 	c.BranchCommits = getCommits(repo, b.Name, git)
+		// 	log.Infof("Branch gathered for repository: %s branch: %s ", repo, b.Name)
+		// 	d.Commits = append(d.Commits, c)
+		// }
 
 		data = append(data, d)
 
