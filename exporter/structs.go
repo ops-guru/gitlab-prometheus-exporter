@@ -24,10 +24,10 @@ type Datum struct {
 	Branches      []*goGitlab.Branch
 	MergeRequests []*goGitlab.MergeRequest
 	Releases      []*goGitlab.Release
-	Commits       []*CommitsPerBranch
+	Commits       []*goGitlab.Commit
 }
 
-type CommitsPerBranch struct {
-	Branch        string
-	BranchCommits []*goGitlab.Commit
-}
+// type CommitsPerBranch struct {
+// 	Branch        string
+// 	BranchCommits []*goGitlab.Commit
+// }
