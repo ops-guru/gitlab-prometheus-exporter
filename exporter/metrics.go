@@ -36,7 +36,7 @@ func (e *Exporter) processMetrics(data []*Datum, ch chan<- prometheus.Metric) er
 	// APIMetrics - range through the data slice
 	for _, x := range data {
 		for _, mr := range x.MergeRequests {
-			ch <- prometheus.MustNewConstMetric(e.APIMetrics["MergeRequestID"], prometheus.CounterValue, 1, x.RepoName, mr.Author.Name, mr.Title, mr.MergeStatus)
+			ch <- prometheus.MustNewConstMetric(e.APIMetrics["MergeRequestID"], prometheus.CounterValue, 1, x.RepoName, mr.Author.Name, mr.Title, mr.State)
 		}
 
 		//for _, b := range x.Commits {
