@@ -36,7 +36,7 @@ func (e *Exporter) processMetrics(data []*Datum, ch chan<- prometheus.Metric) er
 	// APIMetrics - range through the data slice
 	for _, x := range data {
 		for _, mr := range x.MergeRequests {
-			ch <- prometheus.MustNewConstMetric(e.APIMetrics["MergeRequestID"], prometheus.GaugeValue, float64(mr.ID), x.RepoName, mr.Author.Name, mr.Title, mr.MergeStatus)
+			ch <- prometheus.MustNewConstMetric(e.APIMetrics["MergeRequestID"], prometheus.CounterValue, 1, x.RepoName, mr.Author.Name, mr.Title, mr.MergeStatus)
 		}
 
 		//for _, b := range x.Commits {
@@ -44,12 +44,12 @@ func (e *Exporter) processMetrics(data []*Datum, ch chan<- prometheus.Metric) er
 		// 	ch <- prometheus.MustNewConstMetric(e.APIMetrics["Commits"], prometheus.GaugeValue, 0.0, x.RepoName, b.Branch, c.ID, c.AuthorName, c.CreatedAt.String())
 		// }
 		for _, c := range x.Commits {
-			ch <- prometheus.MustNewConstMetric(e.APIMetrics["Commits"], prometheus.GaugeValue, 0.0, x.RepoName, c.ID, c.AuthorName)
+			ch <- prometheus.MustNewConstMetric(e.APIMetrics["Commits"], prometheus.CounterValue, 1, x.RepoName, c.ID, c.AuthorName)
 
 		}
 
 		for _, r := range x.Releases {
-			ch <- prometheus.MustNewConstMetric(e.APIMetrics["Releases"], prometheus.GaugeValue, 0.0, x.RepoName, r.Name, r.TagName)
+			ch <- prometheus.MustNewConstMetric(e.APIMetrics["Releases"], prometheus.CounterValue, 1, x.RepoName, r.Name, r.TagName)
 		}
 
 		//ch <- prometheus.MustNewConstMetric(e.APIMetrics["MergeRequestTotal"], prometheus.GaugeValue, float64(mrCount))
