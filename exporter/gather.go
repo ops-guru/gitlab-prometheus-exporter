@@ -78,10 +78,10 @@ func getMergeRequests(repo string, client *goGitlab.Client) MergeRequests {
 
 type Commits []*goGitlab.Commit
 
-func getCommits(repo string, branch string, client *goGitlab.Client) Commits {
+//func getCommits(repo string, branch string, client *goGitlab.Client) Commits {
+func getCommits(repo string, client *goGitlab.Client) Commits {
 	var commits Commits
 	opts := &goGitlab.ListCommitsOptions{
-		RefName: &branch,
 		ListOptions: goGitlab.ListOptions{
 			Page: 0,
 		},
