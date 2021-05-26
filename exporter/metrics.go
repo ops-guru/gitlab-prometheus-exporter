@@ -1,6 +1,8 @@
 package exporter
 
 import (
+	"strconv"
+
 	"github.com/prometheus/client_golang/prometheus"
 )
 
@@ -12,7 +14,7 @@ func AddMetrics() map[string]*prometheus.Desc {
 	APIMetrics["MergeRequestID"] = prometheus.NewDesc(
 		prometheus.BuildFQName("gitlab", "repo", "merge_req_id"),
 		"Merge request ID",
-		[]string{"repo_name", "author", "title", "merge_status"}, nil,
+		[]string{"repo_name", "mr_id", "author", "title", "merge_status"}, nil,
 	)
 
 	APIMetrics["Commits"] = prometheus.NewDesc(
@@ -36,7 +38,7 @@ func (e *Exporter) processMetrics(data []*Datum, ch chan<- prometheus.Metric) er
 	// APIMetrics - range through the data slice
 	for _, x := range data {
 		for _, mr := range x.MergeRequests {
-			ch <- prometheus.MustNewConstMetric(e.APIMetrics["MergeRequestID"], prometheus.CounterValue, 1, x.RepoName, mr.Author.Name, mr.Title, mr.State)
+			ch <- prometheus.MustNewConstMetric(e.APIMetrics["MergeRequestID"], prometheus.CounterValue, 1, x.RepoName, strconv.Itoa(mr.ID), mr.Author.Name, mr.Title, mr.State)
 		}
 
 		//for _, b := range x.Commits {
